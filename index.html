@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js Hands-on Example</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>My Vue.js App</h1>
+        <input v-model="newItem" placeholder="Enter a new item">
+        <button @click="addItem">Add Item</button>
+
+        <ul>
+            <li v-for="(item, index) in items" :key="index">
+                {{ item }} <button @click="removeItem(index)">❌</button>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    newItem: '',
+                    items: ['Vue.js', 'JavaScript', 'Web Development','wow']
+                };
+            },
+            methods: {
+                addItem() {
+                    if (this.newItem.trim() !== '') {
+                        this.items.push(this.newItem);
+                        this.newItem = ''; // Clear input
+                    }
+                },
+                removeItem(index) {
+                    this.items.splice(index, 1);
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>
