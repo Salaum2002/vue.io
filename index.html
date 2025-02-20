@@ -3,44 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue.js Hands-on Example</title>
+    <title>Vue Login Page</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url('Benro.jpg') no-repeat;
+            background-size: cover;
+            background-position: center;
+            
+        .login-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        input {
+            display: block;
+            width: calc(100% - 20px); /* Adjust width to fit within the box */
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; /* Ensures padding doesn't overflow */
+        }
+        button {
+            background: green;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+    </style>
 </head>
 <body>
-    <div id="app">
-        <h1>My Vue.js App</h1>
-        <input v-model="newItem" placeholder="Enter a new item">
-        <button @click="addItem">Add Item</button>
 
-        <ul>
-            <li v-for="(item, index) in items" :key="index">
-                {{ item }} <button @click="removeItem(index)">❌</button>
-            </li>
-        </ul>
+<div id="app">
+    <div class="login-container">
+        <h2>Login</h2>
+        <input v-model="username" type="text" placeholder="Username">
+        <input v-model="password" type="password" placeholder="Password">
+        <button @click="login">Login</button>
+        <p v-if="error" class="error">{{ error }}</p>
+        <p v-if="loggedIn" class="success">Welcome, {{ username }}!</p>
     </div>
+</div>
 
-    <script>
-        const app = Vue.createApp({
-            data() {
-                return {
-                    newItem: '',
-                    items: ['Vue.js', 'JavaScript', 'Web Development','wow']
-                };
-            },
-            methods: {
-                addItem() {
-                    if (this.newItem.trim() !== '') {
-                        this.items.push(this.newItem);
-                        this.newItem = ''; // Clear input
-                    }
-                },
-                removeItem(index) {
-                    this.items.splice(index, 1);
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                username: "",
+                password: "",
+                error: "",
+                loggedIn: false
+            };
+        },
+        methods: {
+            login() {
+                const correctUsername = "admin";
+                const correctPassword = "password123";
+                if (this.username === correctUsername && this.password === correctPassword) {
+                    this.loggedIn = true;
+                    this.error = "";
+                } else {
+                    this.error = "Invalid username or password";
+                    this.loggedIn = false;
                 }
             }
-        });
+        }
+    });
 
-        app.mount('#app');
-    </script>
+    app.mount("#app");
+</script>
+
 </body>
 </html>
